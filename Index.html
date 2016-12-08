@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="customersCtrl"> 
+
+<ul>
+  <li ng-repeat="x in myData.records">
+    {{ x.Name + ', ' + x.Email }}
+  </li>
+</ul>
+
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+	$scope.myData = [];
+  $http.get("json.json").success(function (response) {
+	
+      $scope.myData = response;
+	  //console.log(response.records[2].Name);
+	  angular.forEach(response.records, function(value, key) {
+		  //console.log(key, value);
+		  $http.post("https://app.webinarjam.com/api/v2/register",{
+		
+			"webinar_id" :"8b51d4be86",
+			"api_key" : "5692ae3ed0c7886ad784c2d2e33001ac1c8837b89fae83cf4019020951697bf3",
+			"schedule" : "0",
+			"name" : value.Name,
+			"email" :   value.Email
+		  
+		  
+		  
+		  
+		  
+		  }).success(function (response) {
+		  
+		  })
+		  //console.log(value.Name);
+		});
+  });
+});
+</script>
+
+</body>
+</html>
